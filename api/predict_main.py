@@ -2,7 +2,7 @@ import pandas as pd
 import sys
 import numpy as np
 
-sys.path.insert(1,"common")
+sys.path.insert(0,"common")
 from constants import *
 
 

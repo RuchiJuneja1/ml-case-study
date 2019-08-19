@@ -25,7 +25,7 @@ def form():
         <html>
             <body>
                 <h1>Upload dataset file to get predictions</h1>
-
+				<p> Upload semi-colon separated csv file.</p>
                 <form action="/predict" method="post" enctype="multipart/form-data">
                     <input type="file" name="data_file" />
                     <input type="submit" />
