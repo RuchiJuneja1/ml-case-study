@@ -4,7 +4,7 @@ from sklearn.externals import joblib
 import pandas as pd
 
 
-import predict_main
+import api.predict_main
 import os
 
 app = Flask(__name__)
@@ -12,9 +12,9 @@ app = Flask(__name__)
 
 # load model file and scalar file
 current_dir = os.path.dirname(__file__)
-model_file = os.path.join(current_dir, "../data/prediction_model.sav")
+model_file = os.path.join(current_dir, "data/prediction_model.sav")
 loaded_model = joblib.load(model_file)
-model_scaler_file = os.path.join(current_dir, "../data/scaler.sav")
+model_scaler_file = os.path.join(current_dir, "data/scaler.sav")
 model_scaler = joblib.load(model_scaler_file)
 
 
@@ -62,11 +62,11 @@ def predict_api():
 		error_df.loc[0] = "Blank file uploaded"
 		app.logger.error('input file is blank')
 		return send_response(error_df)
-	default_prediction_df = predict_main.predict_default(loaded_model, dataset, model_scaler)
+	default_prediction_df = api.predict_main.predict_default(loaded_model, dataset, model_scaler)
 	app.logger.info('got the predictions')
 	return send_response(default_prediction_df)
 
 
 
 if __name__ == '__main__':
-	app.run()
+	app.run(host='0.0.0.0')
