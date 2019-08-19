@@ -56,11 +56,14 @@ def predict_api():
 	'''
 	try:
 		dataset = pd.read_csv(request.files.get('data_file'), sep=';')
+		app.logger.info("input file read successfully")
 	except pd.io.common.EmptyDataError:
 		error_df = pd.DataFrame(columns=['error_message'])
 		error_df.loc[0] = "Blank file uploaded"
+		app.logger.error('input file is blank')
 		return send_response(error_df)
 	default_prediction_df = predict_main.predict_default(loaded_model, dataset, model_scaler)
+	app.logger.info('got the predictions')
 	return send_response(default_prediction_df)
 
 
